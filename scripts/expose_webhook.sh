@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Run Cloudflare tunnel to expose adws/trigger_webhook.py to the public internet
-# Requires CLOUDFLARED_TUNNEL_TOKEN to be set in .env
+# Run Tailscale funnel to expose adws/trigger_webhook.py to the public internet
+# Uses Tailscale Funnel on port 8001 (where trigger_webhook.py runs)
 
-# Load CLOUDFLARED_TUNNEL_TOKEN from .env file
-if [ -f .env ]; then
-    export CLOUDFLARED_TUNNEL_TOKEN=$(grep CLOUDFLARED_TUNNEL_TOKEN .env | cut -d '=' -f2)
-fi
+echo "Exposing webhook server on https://kristophers-macbook-pro.tail0456fa.ts.net/liseur-webhook"
+echo "Make sure trigger_webhook.py is running on port 8001"
+echo ""
 
-cloudflared tunnel run --token $CLOUDFLARED_TUNNEL_TOKEN
+# Serve the local webhook server (port 8001) via Tailscale Funnel
+tailscale funnel --bg --set-path=/liseur-webhook 8001
