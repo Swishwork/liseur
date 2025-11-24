@@ -2,7 +2,7 @@
 """FastAPI server for Syllable Blender - Digital Montessori Blending Board."""
 
 import os
-from typing import List, Dict, Optional
+from typing import List, Optional
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
