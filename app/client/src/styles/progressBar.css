@@ -1,0 +1,239 @@
+.progress-bar-wrapper {
+  width: 100%;
+  padding: 1rem;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2rem;
+}
+
+.progress-bar-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.progress-bar-label__text {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.progress-bar-label__count {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.progress-bar-container {
+  position: relative;
+  background: #F5F0EB;
+  border-radius: var(--radius-full);
+  height: 28px;
+  padding: 3px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+  overflow: visible;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--color-warm-green) 0%, var(--color-warm-green-light) 50%, var(--color-warm-green) 100%);
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(143, 188, 143, 0.3);
+}
+
+.progress-bar-shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+.progress-bar-milestone {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+}
+
+.progress-bar-milestone__marker {
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: var(--color-border-medium);
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar-milestone--reached .progress-bar-milestone__marker {
+  background: var(--color-warm-green);
+  transform: scale(1.2);
+  box-shadow: 0 0 8px rgba(144, 238, 144, 0.5);
+}
+
+.progress-bar-milestone__label {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+  font-weight: 500;
+}
+
+.progress-bar-complete {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: bounce 1s ease-in-out;
+}
+
+.progress-bar-complete__icon {
+  font-size: 1.25rem;
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+
+.progress-bar-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.75rem;
+  padding: 0 0.25rem;
+}
+
+.progress-bar-percentage {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--color-warm-amber) 0%, var(--color-warm-amber-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.progress-bar-encouragement {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  font-style: italic;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.progress-bar-encouragement--complete {
+  color: var(--color-warm-green);
+  font-weight: 600;
+  font-style: normal;
+  animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Animations */
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-50%);
+  }
+  50% {
+    transform: translateY(-70%);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .progress-bar-wrapper {
+    padding: 0.875rem;
+  }
+  
+  .progress-bar-label__text {
+    font-size: 1rem;
+  }
+  
+  .progress-bar-label__count {
+    font-size: 0.875rem;
+  }
+  
+  .progress-bar-container {
+    height: 24px;
+  }
+  
+  .progress-bar-percentage {
+    font-size: 1.25rem;
+  }
+  
+  .progress-bar-encouragement {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .progress-bar-label {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .progress-bar-info {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  .progress-bar-milestone__label {
+    display: none;
+  }
+}
