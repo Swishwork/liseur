@@ -199,6 +199,20 @@ async def github_webhook(request: Request):
         return {"status": "error", "message": "Internal error processing webhook"}
 
 
+# Alias route for liseur-specific webhook path
+@app.post("/liseur-webhook")
+async def liseur_webhook(request: Request):
+    """Alias for github_webhook to support /liseur-webhook path."""
+    return await github_webhook(request)
+
+
+# Root path handler for Tailscale funnel (when path gets stripped)
+@app.post("/")
+async def root_webhook(request: Request):
+    """Handle webhook at root path (Tailscale may strip the path)."""
+    return await github_webhook(request)
+
+
 @app.get("/health")
 async def health():
     """Health check endpoint - runs comprehensive system health check."""
