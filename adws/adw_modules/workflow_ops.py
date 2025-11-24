@@ -538,9 +538,20 @@ def find_spec_file(state: ADWState, logger: logging.Logger) -> Optional[str]:
     """Find the spec file from state or by examining git diff."""
     # Check if spec file is already in state (from plan phase)
     spec_file = state.get("plan_file")
-    if spec_file and os.path.exists(spec_file):
-        logger.info(f"Using spec file from state: {spec_file}")
-        return spec_file
+    if spec_file:
+        # Convert to absolute path if it's relative
+        if not os.path.isabs(spec_file):
+            # Get project root (this file is in adws/adw_modules/)
+            project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+            spec_file_abs = os.path.join(project_root, spec_file)
+        else:
+            spec_file_abs = spec_file
+
+        if os.path.exists(spec_file_abs):
+            logger.info(f"Using spec file from state: {spec_file}")
+            return spec_file
+        else:
+            logger.warning(f"Spec file from state not found at: {spec_file_abs}")
 
     # Otherwise, try to find it from git diff
     logger.info("Looking for spec file in git diff")
