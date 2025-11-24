@@ -1,10 +1,8 @@
 """Unit tests for audio generation and management."""
 
 import pytest
-import asyncio
 from pathlib import Path
 import tempfile
-import os
 from unittest.mock import patch, MagicMock
 
 from core.audio import (

@@ -201,11 +201,18 @@ def prompt_claude_code(request: AgentPromptRequest) -> AgentPromptResponse:
     # Set up environment with only required variables
     env = get_claude_env()
 
+    # Determine working directory - always use project root for consistency
+    # __file__ is in adws/adw_modules/, so we need to go up 3 levels to get to project root
+    # adws/adw_modules/agent.py -> adws/adw_modules -> adws -> project_root
+    adw_modules_dir = os.path.dirname(os.path.abspath(__file__))  # adws/adw_modules
+    adws_dir = os.path.dirname(adw_modules_dir)  # adws
+    project_root = os.path.dirname(adws_dir)  # project root
+
     try:
         # Execute Claude Code and pipe output to file
         with open(request.output_file, "w") as f:
             result = subprocess.run(
-                cmd, stdout=f, stderr=subprocess.PIPE, text=True, env=env
+                cmd, stdout=f, stderr=subprocess.PIPE, text=True, env=env, cwd=project_root
             )
 
         if result.returncode == 0:

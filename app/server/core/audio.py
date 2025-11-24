@@ -4,7 +4,6 @@ import asyncio
 import hashlib
 import os
 from pathlib import Path
-from typing import Optional
 
 from gtts import gTTS
 
