@@ -96,7 +96,11 @@ const BlendingBoard: React.FC<BlendingBoardProps> = ({
     const consonantToBlend = selectedConsonant || '';
     const vowelToBlend = selectedVowel || '';
     
-    if (!vowelToBlend && levelConfig?.consonants.length !== 0) return;
+    // For vowel-only levels, allow blending with empty consonant
+    // For consonant-vowel levels, require both selections
+    const isVowelOnlyLevel = levelConfig?.consonants.length === 0;
+    if (!vowelToBlend) return;
+    if (!isVowelOnlyLevel && !consonantToBlend && !selectedConsonant) return;
 
     try {
       setIsBlending(true)

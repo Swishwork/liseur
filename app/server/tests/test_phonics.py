@@ -103,10 +103,13 @@ def test_edge_cases():
     """Test edge cases and boundary conditions."""
     assert is_valid_combination('', '') is False
     assert is_valid_combination('m', '') is False
-    assert is_valid_combination('', 'a') is False
+    assert is_valid_combination('', 'a') is True  # Vowel-only blends are now valid
     
     with pytest.raises(ValueError):
         blend_syllable('', '')
     
     with pytest.raises(ValueError):
         blend_syllable('m', '')
+    
+    # Test that vowel-only blends work
+    assert blend_syllable('', 'a') == 'a'

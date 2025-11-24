@@ -35,6 +35,11 @@ def is_valid_combination(consonant: str, vowel: str) -> bool:
     consonant = consonant.lower().strip()
     vowel = vowel.lower().strip()
     
+    # Allow empty consonant for vowel-only blends
+    if consonant == '':
+        # For vowel-only blends, just check that vowel is valid
+        return vowel in SIMPLE_VOWELS or vowel in FRENCH_VOWELS
+    
     if consonant not in FRENCH_CONSONANTS:
         return False
     
@@ -56,6 +61,10 @@ def blend_syllable(consonant: str, vowel: str) -> str:
     
     if not is_valid_combination(consonant, vowel):
         raise ValueError(f"Invalid combination: {consonant} + {vowel}")
+    
+    # Handle vowel-only blends when consonant is empty
+    if consonant == '':
+        return vowel
     
     return f"{consonant}{vowel}"
 

@@ -40,7 +40,7 @@ class LettersResponse(BaseModel):
     letters: List[str]
 
 class BlendRequest(BaseModel):
-    consonant: str
+    consonant: Optional[str] = ""
     vowel: str
 
 class BlendResponse(BaseModel):
@@ -98,17 +98,20 @@ async def blend_syllable(request: BlendRequest):
     """Blend consonant and vowel to create syllable."""
     from core.phonics import blend_syllable, is_valid_combination
     
-    if not is_valid_combination(request.consonant, request.vowel):
+    # Handle None consonant as empty string for vowel-only blends
+    consonant = request.consonant if request.consonant is not None else ""
+    
+    if not is_valid_combination(consonant, request.vowel):
         raise HTTPException(
             status_code=400,
-            detail=f"Invalid combination: {request.consonant} + {request.vowel}"
+            detail=f"Invalid combination: {consonant} + {request.vowel}"
         )
     
-    syllable = blend_syllable(request.consonant, request.vowel)
+    syllable = blend_syllable(consonant, request.vowel)
     audio_url = f"/api/audio/{syllable}"
     
     return BlendResponse(
-        consonant=request.consonant,
+        consonant=consonant,
         vowel=request.vowel,
         syllable=syllable,
         audio_url=audio_url
