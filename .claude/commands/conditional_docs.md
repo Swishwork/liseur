@@ -37,3 +37,11 @@ This prompt helps you determine what documentation you should read based on the 
     - When adding download buttons to the UI
     - When troubleshooting data export issues
     - When understanding the CSV export API endpoints
+
+- app_docs/feature-27dba6d0-syllable-blender.md
+  - Conditions:
+    - When working with phonics or language learning features
+    - When implementing audio generation or text-to-speech functionality
+    - When creating interactive educational components with animations
+    - When building React components for letter or syllable selection
+    - When troubleshooting French pronunciation or audio caching issues
