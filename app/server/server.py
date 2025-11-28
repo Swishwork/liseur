@@ -2,7 +2,7 @@
 """FastAPI server for Syllable Blender - Digital Montessori Blending Board."""
 
 import os
-from typing import List
+from typing import List, Optional
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
@@ -40,7 +40,7 @@ class LettersResponse(BaseModel):
     letters: List[str]
 
 class BlendRequest(BaseModel):
-    consonant: str
+    consonant: Optional[str] = ""
     vowel: str
 
 class BlendResponse(BaseModel):
@@ -48,6 +48,24 @@ class BlendResponse(BaseModel):
     vowel: str
     syllable: str
     audio_url: str
+
+class LevelResponse(BaseModel):
+    id: int
+    name: str
+    description: str
+    intro_message: str
+    consonants: List[str]
+    vowels: List[str]
+    required_successes: int
+    color: str
+    icon: Optional[str]
+
+class LevelsListResponse(BaseModel):
+    levels: List[LevelResponse]
+
+class LevelLettersResponse(BaseModel):
+    consonants: List[str]
+    vowels: List[str]
 
 @app.get("/")
 async def root():
@@ -80,17 +98,20 @@ async def blend_syllable(request: BlendRequest):
     """Blend consonant and vowel to create syllable."""
     from core.phonics import blend_syllable, is_valid_combination
     
-    if not is_valid_combination(request.consonant, request.vowel):
+    # Handle None consonant as empty string for vowel-only blends
+    consonant = request.consonant if request.consonant is not None else ""
+    
+    if not is_valid_combination(consonant, request.vowel):
         raise HTTPException(
             status_code=400,
-            detail=f"Invalid combination: {request.consonant} + {request.vowel}"
+            detail=f"Invalid combination: {consonant} + {request.vowel}"
         )
     
-    syllable = blend_syllable(request.consonant, request.vowel)
+    syllable = blend_syllable(consonant, request.vowel)
     audio_url = f"/api/audio/{syllable}"
     
     return BlendResponse(
-        consonant=request.consonant,
+        consonant=consonant,
         vowel=request.vowel,
         syllable=syllable,
         audio_url=audio_url
@@ -116,6 +137,58 @@ async def get_audio(syllable: str):
         media_type="audio/mpeg",
         headers={"Cache-Control": "public, max-age=3600"}
     )
+
+@app.get("/api/levels", response_model=LevelsListResponse)
+async def get_all_levels():
+    """Get all available learning levels."""
+    from core.levels import get_all_levels
+    
+    levels = get_all_levels()
+    return LevelsListResponse(
+        levels=[LevelResponse(**level.to_dict()) for level in levels]
+    )
+
+@app.get("/api/levels/{level_id}", response_model=LevelResponse)
+async def get_level(level_id: int):
+    """Get a specific level by ID."""
+    from core.levels import get_level_by_id
+    
+    level = get_level_by_id(level_id)
+    if not level:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Level {level_id} not found"
+        )
+    
+    return LevelResponse(**level.to_dict())
+
+@app.get("/api/levels/{level_id}/letters", response_model=LevelLettersResponse)
+async def get_level_letters(level_id: int):
+    """Get consonants and vowels for a specific level."""
+    from core.levels import get_letters_for_level
+    
+    letters = get_letters_for_level(level_id)
+    if not letters["consonants"] and not letters["vowels"]:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Level {level_id} not found"
+        )
+    
+    return LevelLettersResponse(**letters)
+
+@app.post("/api/levels/{level_id}/validate")
+async def validate_blend_for_level(level_id: int, request: BlendRequest):
+    """Validate if a blend is valid for the given level."""
+    from core.levels import validate_blend_for_level
+    
+    is_valid = validate_blend_for_level(level_id, request.consonant, request.vowel)
+    
+    return {
+        "level_id": level_id,
+        "consonant": request.consonant,
+        "vowel": request.vowel,
+        "is_valid": is_valid
+    }
 
 if __name__ == "__main__":
     import uvicorn

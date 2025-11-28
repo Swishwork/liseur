@@ -45,3 +45,13 @@ This prompt helps you determine what documentation you should read based on the 
     - When creating interactive educational components with animations
     - When building React components for letter or syllable selection
     - When troubleshooting French pronunciation or audio caching issues
+
+- app_docs/feature-ce63d882-learning-journey-progression.md
+  - Conditions:
+    - When implementing learning progression or level systems
+    - When working with progress tracking and persistence
+    - When creating warm, child-friendly UI themes
+    - When building educational journey maps or navigation
+    - When implementing mastery-based unlocking systems
+    - When working with localStorage for progress storage
+    - When creating celebration or encouragement systems

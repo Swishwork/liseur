@@ -86,7 +86,6 @@ def main():
         os.path.join(script_dir, "adw_test.py"),
         issue_number,
         adw_id,
-        "--skip-e2e",
     ]
     print(f"\n=== TEST PHASE ===")
     print(f"Running: {' '.join(test_cmd)}")

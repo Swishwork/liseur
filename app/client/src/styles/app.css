@@ -42,6 +42,41 @@ body {
   padding: 1rem;
 }
 
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto 2rem;
+  padding: 1rem 0;
+}
+
+.app-title {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--color-warm-amber, #FFA500) 0%, var(--color-warm-amber-light, #FFB347) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.btn-parent-dashboard {
+  background: linear-gradient(135deg, var(--color-warm-purple, #DDA0DD) 0%, var(--color-warm-purple-light, #E6B8E6) 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-parent-dashboard:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
 .blending-board {
   max-width: 1200px;
   margin: 0 auto;
@@ -326,8 +361,29 @@ body {
 }
 
 @media (max-width: 480px) {
+  .app-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .app-title {
+    font-size: 1.5rem;
+  }
+  
+  .btn-parent-dashboard {
+    width: 100%;
+    max-width: 200px;
+  }
+  
   .blending-board__header h1 {
     font-size: 1.25rem;
+  }
+  
+  .blending-board__header-left {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
   }
   
   .letter-selector__label {

@@ -1,0 +1,254 @@
+.level-map {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.level-map__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.level-map__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-warm-amber);
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.level-map__subtitle {
+  font-size: 1.25rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.level-map__path {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 3rem;
+}
+
+.level-map__node {
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+}
+
+.level-map__connector {
+  display: flex;
+  justify-content: center;
+  margin: -10px 0;
+  z-index: 0;
+}
+
+.level-card {
+  width: 100%;
+  padding: 1.5rem;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.level-card__icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.level-card__name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.level-card__description {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+.level-card__badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-warm-green);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.level-card__checkmark {
+  font-size: 1.25rem;
+}
+
+.level-card__progress {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.level-card__progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--color-bg-hover);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: 0.25rem;
+}
+
+.level-card__progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-warm-green) 0%, var(--color-warm-green-light) 100%);
+  transition: width 0.3s ease;
+}
+
+.level-card__progress-text {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.level-card__lock {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.level-card__lock-icon {
+  font-size: 2.5rem;
+}
+
+.level-card__lock-text {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.level-card__requirements {
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+  margin-top: 0.5rem;
+}
+
+.level-map__stats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  padding: 2rem;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.level-map__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.level-map__stat-label {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.level-map__stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-warm-amber);
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .level-map {
+    padding: 1rem;
+  }
+  
+  .level-map__title {
+    font-size: 2rem;
+  }
+  
+  .level-map__subtitle {
+    font-size: 1rem;
+  }
+  
+  .level-card {
+    padding: 1.25rem;
+    min-height: 120px;
+  }
+  
+  .level-card__icon {
+    font-size: 2.5rem;
+  }
+  
+  .level-card__name {
+    font-size: 1.25rem;
+  }
+  
+  .level-card__description {
+    font-size: 0.875rem;
+  }
+  
+  .level-map__stats {
+    gap: 2rem;
+    padding: 1.5rem;
+  }
+  
+  .level-map__stat-value {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .level-map__title {
+    font-size: 1.5rem;
+  }
+  
+  .level-card {
+    padding: 1rem;
+    min-height: 100px;
+  }
+  
+  .level-card__icon {
+    font-size: 2rem;
+  }
+  
+  .level-card__name {
+    font-size: 1.1rem;
+  }
+  
+  .level-card__description {
+    font-size: 0.8rem;
+  }
+  
+  .level-map__stats {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
